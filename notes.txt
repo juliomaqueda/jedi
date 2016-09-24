@@ -1,0 +1,22 @@
+-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5000
+
+
+EventRequest:
+
+	AccessWatchpointRequest
+	BreakpointRequest
+	ClassPrepareRequest
+	ClassUnloadRequest
+	ExceptionRequest
+	MethodEntryRequest
+	MethodExitRequest
+	ModificationWatchpointRequest
+	MonitorContendedEnteredRequest
+	MonitorContendedEnterRequest
+	MonitorWaitedRequest
+	MonitorWaitRequest
+	StepRequest
+	ThreadDeathRequest
+	ThreadStartRequest
+	VMDeathRequest
+	WatchpointRequest
