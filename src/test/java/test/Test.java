@@ -14,11 +14,11 @@ public class Test implements ITest{
 	}
 	
 	public void run() throws InterruptedException {
-		for (int i = 0; i < 100; i++) {
+		while (true) {
 			foo = random.nextInt();
 			System.out.println(foo);
 			
-			Thread.sleep(10000);
+			Thread.sleep(5000);
 			
 			pintar();
 		}
@@ -26,5 +26,11 @@ public class Test implements ITest{
 
 	public void pintar() {
 		
+		String a = "";
+		String b = "sdfdsf";
+		
+		String c = a + b;
+		
+		System.out.println("Pinto " + c);
 	}
 }

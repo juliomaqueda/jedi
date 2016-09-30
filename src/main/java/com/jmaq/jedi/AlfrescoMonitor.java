@@ -1,8 +1,8 @@
 package com.jmaq.jedi;
 
 import java.io.IOException;
+import java.util.Arrays;
 
-import com.jmaq.jedi.handler.BreakPointHandler;
 import com.jmaq.jedi.handler.MethodEntryHandler;
 import com.jmaq.jedi.handler.MethodExitHandler;
 import com.jmaq.jedi.pipeline.EventHandlerPipeline;
@@ -14,37 +14,36 @@ import com.sun.jdi.event.EventSet;
 import com.sun.jdi.event.VMDeathEvent;
 import com.sun.jdi.event.VMDisconnectEvent;
 
-public class Monitor {
+public class AlfrescoMonitor {
 
-	private static final String CLASS_FILTER = "test.Test";
+	private static final String[] excludes = {
+			"java.*", "javax.*",
+			"sun.*", "com.sun.*", "net.*", "org.*", "freemarker.*",
+			"com.hazelcast.*", "com.westernacher.*", "com.google.*",
+			"com.ixxus.queue.*", "com.ixxus.alfresco.shareconfig.*"
+	};
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 
-		VirtualMachine vm = new VMAcquirer().connect(5000);
+		VirtualMachine vm = new VMAcquirer().connect(8000);
 		
 		EventHandlerPipeline eventsPipeline = new EventHandlerPipeline();
 
 		//MethodEntryHandler
 		eventsPipeline.addHandler(
 				new MethodEntryHandler.Builder()
-				.classFilter(CLASS_FILTER)
-				.enabled(false)
+//				.classFilter(CLASS_FILTER)
+				.exclusions(Arrays.asList(excludes))
+//				.enabled(false)
 				.build(vm.eventRequestManager())
 		);
 
 		//MethodExitHandler
 		eventsPipeline.addHandler(
 				new MethodExitHandler.Builder()
-				.classFilter(CLASS_FILTER)
-				.enabled(false)
-				.build(vm.eventRequestManager())
-		);
-
-		//BreakPointHandler
-		eventsPipeline.addHandler(
-				new BreakPointHandler.Builder()
-				.classFilter(CLASS_FILTER)
-				.lineNumber(32)
+//				.classFilter(CLASS_FILTER)
+				.exclusions(Arrays.asList(excludes))
+//				.enabled(false)
 				.build(vm.eventRequestManager())
 		);
 

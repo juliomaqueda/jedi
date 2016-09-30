@@ -1,4 +1,4 @@
-package com.jmaq.jedi;
+package com.jmaq.jedi.vm;
 
 import java.io.IOException;
 import java.util.Map;
@@ -12,9 +12,6 @@ import com.sun.jdi.connect.IllegalConnectorArgumentsException;
 
 public class VMAcquirer {
 
-	/**
-	 * Call this with the localhost port to connect to.
-	 */
 	public VirtualMachine connect(int port)	throws IOException {
 		String strPort = Integer.toString(port);
 		

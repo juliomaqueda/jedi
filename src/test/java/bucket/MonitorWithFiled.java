@@ -3,7 +3,7 @@ package bucket;
 import java.io.IOException;
 import java.util.List;
 
-import com.jmaq.jedi.VMAcquirer;
+import com.jmaq.jedi.vm.VMAcquirer;
 import com.sun.jdi.Field;
 import com.sun.jdi.ReferenceType;
 import com.sun.jdi.VirtualMachine;
