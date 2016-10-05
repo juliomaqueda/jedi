@@ -1,0 +1,13 @@
+{
+	"id": 12345,
+	"days": [ "Monday", "Wednesday" ],
+	"breakpoints": [
+		{
+			"className": "test.Test",
+			"lastName": "Menoyo"
+		},
+		{
+			"className": "trtrtr"
+		}
+	]
+}

@@ -1,4 +1,4 @@
-package com.jmaq.jedi.handler;
+package com.jmaq.jedi.handler.event;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -3,8 +3,8 @@ package com.jmaq.jedi;
 import java.io.IOException;
 import java.util.Arrays;
 
-import com.jmaq.jedi.handler.MethodEntryHandler;
-import com.jmaq.jedi.handler.MethodExitHandler;
+import com.jmaq.jedi.handler.event.MethodEntryHandler;
+import com.jmaq.jedi.handler.event.MethodExitHandler;
 import com.jmaq.jedi.pipeline.EventHandlerPipeline;
 import com.jmaq.jedi.vm.VMAcquirer;
 import com.sun.jdi.VirtualMachine;

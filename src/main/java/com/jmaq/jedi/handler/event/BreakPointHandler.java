@@ -1,4 +1,4 @@
-package com.jmaq.jedi.handler;
+package com.jmaq.jedi.handler.event;
 
 import java.util.Collections;
 import java.util.List;
@@ -31,7 +31,7 @@ public final class BreakPointHandler extends EventHandler {
 
 		private int lineNumber;
 
-		private boolean enabled = true;
+		private boolean enabled = false;
 
 		public Builder classFilter(final String classFilter) {
 			this.classFilter = classFilter;

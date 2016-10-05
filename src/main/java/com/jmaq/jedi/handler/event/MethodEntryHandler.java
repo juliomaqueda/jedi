@@ -1,4 +1,4 @@
-package com.jmaq.jedi.handler;
+package com.jmaq.jedi.handler.event;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,7 +25,7 @@ public final class MethodEntryHandler extends EventHandler {
 
 		private String classFilter;
 
-		private boolean enabled = true;
+		private boolean enabled = false;
 
 		private List<String> exclusions = Collections.emptyList();
 

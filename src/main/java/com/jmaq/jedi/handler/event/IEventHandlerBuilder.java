@@ -1,4 +1,4 @@
-package com.jmaq.jedi.handler;
+package com.jmaq.jedi.handler.event;
 
 import com.sun.jdi.request.EventRequestManager;
 

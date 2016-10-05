@@ -2,9 +2,9 @@ package com.jmaq.jedi;
 
 import java.io.IOException;
 
-import com.jmaq.jedi.handler.BreakPointHandler;
-import com.jmaq.jedi.handler.MethodEntryHandler;
-import com.jmaq.jedi.handler.MethodExitHandler;
+import com.jmaq.jedi.handler.event.BreakPointHandler;
+import com.jmaq.jedi.handler.event.MethodEntryHandler;
+import com.jmaq.jedi.handler.event.MethodExitHandler;
 import com.jmaq.jedi.pipeline.EventHandlerPipeline;
 import com.jmaq.jedi.vm.VMAcquirer;
 import com.sun.jdi.VirtualMachine;
@@ -28,7 +28,6 @@ public class Monitor {
 		eventsPipeline.addHandler(
 				new MethodEntryHandler.Builder()
 				.classFilter(CLASS_FILTER)
-				.enabled(false)
 				.build(vm.eventRequestManager())
 		);
 
@@ -36,7 +35,6 @@ public class Monitor {
 		eventsPipeline.addHandler(
 				new MethodExitHandler.Builder()
 				.classFilter(CLASS_FILTER)
-				.enabled(false)
 				.build(vm.eventRequestManager())
 		);
 
@@ -47,6 +45,8 @@ public class Monitor {
 				.lineNumber(32)
 				.build(vm.eventRequestManager())
 		);
+
+		eventsPipeline.enableAll();
 
 		vm.resume();
 
