@@ -3,10 +3,11 @@ package bucket;
 import java.io.IOException;
 import java.util.List;
 
-import com.jmaq.jedi.vm.VMAcquirer;
+import com.jmaq.jedi.vm.VMConnection;
 import com.sun.jdi.Field;
 import com.sun.jdi.ReferenceType;
 import com.sun.jdi.VirtualMachine;
+import com.sun.jdi.connect.IllegalConnectorArgumentsException;
 import com.sun.jdi.event.ClassPrepareEvent;
 import com.sun.jdi.event.Event;
 import com.sun.jdi.event.EventQueue;
@@ -23,9 +24,14 @@ public class MonitorWithFiled {
 	public static final String CLASS_NAME = "com.examples.Test";
 	public static final String FIELD_NAME = "foo";
 
-	public static void main(String[] args) throws IOException, InterruptedException {
+	public static void main(String[] args) throws IOException, InterruptedException, IllegalConnectorArgumentsException {
+
+		VMConnection vmConnection = new VMConnection()
+				.setHostname("localhost")
+				.setPort(5000);
+
 		// connect
-		VirtualMachine vm = new VMAcquirer().connect(8000);
+		VirtualMachine vm = vmConnection.connect();
 
 		// set watch field on already loaded classes
 		List<ReferenceType> referenceTypes = vm.classesByName(CLASS_NAME);

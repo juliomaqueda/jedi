@@ -1,13 +1,21 @@
 {
-	"id": 12345,
-	"days": [ "Monday", "Wednesday" ],
-	"breakpoints": [
-		{
-			"className": "test.Test",
-			"lastName": "Menoyo"
-		},
-		{
-			"className": "trtrtr"
-		}
-	]
+	"connection":
+	{
+		"hostname": "localhost",
+		"port": 5000
+	},
+	"events":
+	{
+		"breakpoints":
+		[
+			{
+				"line": 45
+			},
+			{
+				"className": "test.Test",
+				"lastName": "Menoyo",
+				"line": 32
+			}
+		]
+	}
 }

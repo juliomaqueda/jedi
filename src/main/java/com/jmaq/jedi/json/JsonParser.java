@@ -1,4 +1,4 @@
-package com.jmaq.jedi.handler.json;
+package com.jmaq.jedi.json;
 
 import java.io.IOException;
 
@@ -7,25 +7,11 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public abstract class JsonHandler implements IJsonHandler {
-
-	private IJsonHandler nextHandler;
+public abstract class JsonParser {
 
 	private ObjectMapper mapper = new ObjectMapper();
 
-	public final void chainHandler(final IJsonHandler next) {
-		if (nextHandler == null)
-			nextHandler = next;
-		else
-			nextHandler.chainHandler(next);
-	}
-
-	public void handle(final JsonNode rootNode) {
-		if (nextHandler != null)
-			nextHandler.handle(rootNode);
-	}
-
-	protected <T> T parseSkeleton(final JsonNode json, Class<T> klass) {
+	protected final <T> T parseSkeleton(final JsonNode json, Class<T> klass) {
 		T skeleton = null;
 
 		try {
@@ -35,6 +21,8 @@ public abstract class JsonHandler implements IJsonHandler {
 		} catch (JsonMappingException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

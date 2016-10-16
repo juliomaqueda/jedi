@@ -1,4 +1,4 @@
-package com.jmaq.jedi.handler.event;
+package com.jmaq.jedi.event;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,7 +24,7 @@ public abstract class EventHandler implements IEventHandler {
 		request.disable();
 	}
 
-	protected String now() {
+	protected final String now() {
 		return dateFormat.format(new Date());
 	}
 }

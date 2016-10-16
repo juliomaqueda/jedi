@@ -1,4 +1,4 @@
-package com.jmaq.jedi.handler.event;
+package com.jmaq.jedi.event;
 
 import java.util.Collections;
 import java.util.List;

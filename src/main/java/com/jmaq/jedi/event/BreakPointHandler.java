@@ -1,4 +1,4 @@
-package com.jmaq.jedi.handler.event;
+package com.jmaq.jedi.event;
 
 import java.util.Collections;
 import java.util.List;
@@ -27,14 +27,14 @@ public final class BreakPointHandler extends EventHandler {
 
 	public static final class Builder implements IEventHandlerBuilder{
 
-		private String classFilter;
+		private String className;
 
 		private int lineNumber;
 
 		private boolean enabled = false;
 
-		public Builder classFilter(final String classFilter) {
-			this.classFilter = classFilter;
+		public Builder className(final String classFilter) {
+			this.className = classFilter;
 			return this;
 		}
 
@@ -52,7 +52,7 @@ public final class BreakPointHandler extends EventHandler {
 
 			final VirtualMachine vm = erm.virtualMachine();
 
-			final List<ReferenceType> filteredClasses = vm.classesByName(classFilter);
+			final List<ReferenceType> filteredClasses = vm.classesByName(className);
 
 			if (filteredClasses.size() != 1) {
 				return null;
