@@ -27,7 +27,7 @@ final class ConnectionParser extends JsonParser{
 	}
 
 	@JsonIgnoreProperties(ignoreUnknown = true)
-	private static class Skeleton implements IJsonSkeleton{
+	private static class Skeleton {
 
 		private String hostname;
 
@@ -35,7 +35,6 @@ final class ConnectionParser extends JsonParser{
 
 		private Long timeout;
 
-		@Override
 		public boolean validate() {
 			return hostname != null;
 		}

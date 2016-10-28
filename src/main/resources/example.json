@@ -6,15 +6,26 @@
 	},
 	"events":
 	{
-		"breakpoints":
+		"methodEntries":
 		[
 			{
-				"line": 45
-			},
+				"classInclusions":
+				[
+					"test.Test"
+				],
+				"methodNames":
+				[]
+			}
+		],
+		"methodExit":
+		[
 			{
-				"className": "test.Test",
-				"lastName": "Menoyo",
-				"line": 32
+				"classInclusions":
+				[
+					"test.Test"
+				],
+				"methodNames":
+				[]
 			}
 		]
 	}

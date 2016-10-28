@@ -4,12 +4,12 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.jmaq.jedi.event.BreakPointHandler;
 import com.jmaq.jedi.event.IEventHandlerBuilder;
+import com.jmaq.jedi.event.WatchPointHandler;
 
-final class BreakPointParser extends JsonEventParser {
+final class WatchPointParser extends JsonEventParser {
 
-	private final static String MAIN_ELEMENT = "breakpoints";
+	private final static String MAIN_ELEMENT = "watchpoints";
 
 	protected void generateEventHandler(final JsonNode rootNode, final Set<IEventHandlerBuilder> handlers) {
 		if (rootNode.has(MAIN_ELEMENT)) {
@@ -17,7 +17,7 @@ final class BreakPointParser extends JsonEventParser {
 
 			if (entries.isArray()) {
 				entries.forEach(entry -> {
-					IJsonEventSkeleton skeleton = parseSkeleton(entry, BreakPointParser.Skeleton.class);
+					IJsonEventSkeleton skeleton = parseSkeleton(entry, WatchPointParser.Skeleton.class);
 					handlers.add(skeleton.generateEventHandler());
 				});
 			}
@@ -35,7 +35,7 @@ final class BreakPointParser extends JsonEventParser {
 		private int line;
 
 		public IEventHandlerBuilder generateEventHandler() {
-			return new BreakPointHandler.Builder()
+			return new WatchPointHandler.Builder()
 					.className(className)
 					.lineNumber(line);
 		}

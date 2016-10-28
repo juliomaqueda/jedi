@@ -3,6 +3,7 @@ package com.jmaq.jedi.event;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.jmaq.jedi.vm.VMConnection;
 import com.sun.jdi.VirtualMachine;
@@ -19,6 +20,7 @@ public final class EventsHandlerManager {
 	private VirtualMachine virtualMachine;
 	private EventRequestManager eventRequestManager;
 
+	private Set<IEventHandlerBuilder> eventHandlerBuilders = new HashSet<>();
 	private Set<IEventHandler> eventHandlers = new HashSet<>();
 
 	public EventsHandlerManager(final VMConnection vmConnection) throws IOException, IllegalConnectorArgumentsException {		
@@ -27,24 +29,12 @@ public final class EventsHandlerManager {
 	}
 
 	public void addHandler(final IEventHandlerBuilder handlerBuilder) {
-		eventHandlers.add(handlerBuilder.build(eventRequestManager));
-	}
-
-	private void handle(final Event event) {
-		for (final IEventHandler eventHandler : eventHandlers) {
-			if (eventHandler.canHandle(event)) {
-				eventHandler.handle(event);
-				break;
-			}
-		}
-	}
-
-	private void enableAll() {
-		eventHandlers.forEach(IEventHandler::enable);
+		if (handlerBuilder.validateBuilder())
+			eventHandlerBuilders.add(handlerBuilder);
 	}
 
 	public void manageEvents() throws InterruptedException {
-		enableAll();
+		buildAllHandlers();
 
 		virtualMachine.resume();
 
@@ -63,6 +53,37 @@ public final class EventsHandlerManager {
 			}
 
 			eventSet.resume();
+		}
+	}
+
+	private void buildAllHandlers() {
+		final Set<IEventHandlerBuilder> buildersWithFullScanClasses = eventHandlerBuilders.
+				stream()
+				.filter(IEventHandlerBuilder::requireFullScanClasses)
+				.collect(Collectors.toSet());
+
+		if (buildersWithFullScanClasses.size() > 0) {
+			virtualMachine.allClasses().forEach(classReference -> {
+				buildersWithFullScanClasses.forEach(builder -> builder.applyFilters(classReference));
+			});
+		}
+
+		eventHandlerBuilders.forEach(builder -> {
+			final IEventHandler eventHandler = builder.build(eventRequestManager);
+
+			if (eventHandler != null)
+				eventHandlers.add(eventHandler);
+		});
+
+		eventHandlers.forEach(IEventHandler::enable);
+	}
+
+	private void handle(final Event event) {
+		for (final IEventHandler eventHandler : eventHandlers) {
+			if (eventHandler.canHandle(event)) {
+				eventHandler.handle(event);
+				break;
+			}
 		}
 	}
 }

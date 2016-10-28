@@ -1,0 +1,72 @@
+{
+	"connection":
+	{
+		"hostname": "localhost",
+		"port": 5000
+	},
+	"events":
+	{
+		"breakpoints":
+		[
+			{
+				"className": "test.Test",
+				"lastName": "Menoyo",
+				"line": 32
+			}
+		],
+		"watchpoints":
+		[
+			{
+				"className": "test.Test",
+				"lastName": "Menoyo",
+				"line": 32
+			}
+		],
+		"methodEntries":
+		[
+			{
+				"classInclusions":
+				[],
+				"classExclusions":
+				[
+					"java.*",
+					"javax.*",
+					"sun.*",
+					"com.sun.*",
+					"net.*",
+					"org.*",
+					"freemarker.*",
+					"com.hazelcast.*",
+					"com.google.*",
+					"com.ixxus.queue.*",
+					"com.ixxus.alfresco.shareconfig.*"
+				],
+				"methodNames":
+				[]
+			}
+		],
+		"methodExit":
+		[
+			{
+				"classInclusions":
+				[],
+				"classExclusions":
+				[
+					"java.*",
+					"javax.*",
+					"sun.*",
+					"com.sun.*",
+					"net.*",
+					"org.*",
+					"freemarker.*",
+					"com.hazelcast.*",
+					"com.google.*",
+					"com.ixxus.queue.*",
+					"com.ixxus.alfresco.shareconfig.*"
+				],
+				"methodNames":
+				[]
+			}
+		]
+	}
+}

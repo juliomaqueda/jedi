@@ -13,14 +13,14 @@ import com.sun.jdi.request.BreakpointRequest;
 import com.sun.jdi.request.EventRequest;
 import com.sun.jdi.request.EventRequestManager;
 
-public final class BreakPointHandler extends EventHandler {
+public final class WatchPointHandler extends EventHandler {
 
-	private BreakPointHandler() {}
+	private WatchPointHandler() {}
 
 	public void handle(final Event event) {
 		if (canHandle(event)) {
 			final BreakpointEvent req = (BreakpointEvent) event;
-			System.out.println(now() + " - ENTRY breakpoint: " + req.location().method() + " at line " + req.location().lineNumber());
+			System.out.println(now() + " - WATCHPOINT: " + req.location().method() + " at line " + req.location().lineNumber());
 		}
 	}
 
@@ -44,7 +44,7 @@ public final class BreakPointHandler extends EventHandler {
 			return false;
 		}
 
-		public BreakPointHandler build(final EventRequestManager erm) {
+		public WatchPointHandler build(final EventRequestManager erm) {
 			final VirtualMachine vm = erm.virtualMachine();
 
 			final List<ReferenceType> filteredClasses = vm.classesByName(className);
@@ -70,9 +70,9 @@ public final class BreakPointHandler extends EventHandler {
 			final Location classLocation = classLines.get(0);
 
 			final BreakpointRequest request = erm.createBreakpointRequest(classLocation);
-			request.setSuspendPolicy(EventRequest.SUSPEND_EVENT_THREAD);
+			request.setSuspendPolicy(EventRequest.SUSPEND_NONE);
 
-			BreakPointHandler handler = new BreakPointHandler();
+			WatchPointHandler handler = new WatchPointHandler();
 			handler.requests.add(request);
 
 			return handler;

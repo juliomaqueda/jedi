@@ -14,6 +14,9 @@ final class JsonEventParsersPipeline {
 
 	JsonEventParsersPipeline() {
 		registerParser(new BreakPointParser());
+		registerParser(new WatchPointParser());
+		registerParser(new MethodEntryParser());
+		registerParser(new MethodExitParser());
 	}
 
 	void registerParser(JsonEventParser parser) {
@@ -25,9 +28,9 @@ final class JsonEventParsersPipeline {
 
 	Set<IEventHandlerBuilder> generateEventHandlers(JsonNode jsonContent) {
 		final Set<IEventHandlerBuilder> handlers = new HashSet<>();
-		
+
 		final JsonNode eventsNode = jsonContent.get(EVENTS_NODE);
-		
+
 		if (eventsNode != null) {
 			if (firstParser != null)
 				firstParser.generateEventHandler(eventsNode, handlers);

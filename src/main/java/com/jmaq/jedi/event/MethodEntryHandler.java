@@ -1,13 +1,10 @@
 package com.jmaq.jedi.event;
 
-import java.util.Collections;
-import java.util.List;
-
+import com.sun.jdi.event.BreakpointEvent;
 import com.sun.jdi.event.Event;
-import com.sun.jdi.event.MethodEntryEvent;
+import com.sun.jdi.request.BreakpointRequest;
 import com.sun.jdi.request.EventRequest;
 import com.sun.jdi.request.EventRequestManager;
-import com.sun.jdi.request.MethodEntryRequest;
 
 public final class MethodEntryHandler extends EventHandler {
 
@@ -15,52 +12,46 @@ public final class MethodEntryHandler extends EventHandler {
 
 	public void handle(final Event event) {
 		if (canHandle(event)) {
-			final MethodEntryEvent req = (MethodEntryEvent) event;
-			System.out.println(now() + " - ENTRY METHOD: " + req.method());
+			final BreakpointEvent eventInfo = (BreakpointEvent) event;
+			System.out.println(now() + " - ENTRY METHOD: " + eventInfo.location().method());
 		}
 	}
 
 
-	public static final class Builder implements IEventHandlerBuilder{
+	public static final class Builder extends EventHandlerBuilder{
 
-		private String classFilter;
-
-		private boolean enabled = false;
-
-		private List<String> exclusions = Collections.emptyList();
-
-		public Builder classFilter(final String classFilter) {
-			this.classFilter = classFilter;
+		public Builder classFilter(final String className) {
+			addClassFilter(className);
 			return this;
 		}
 
-		public Builder enabled(final boolean enabled) {
-			this.enabled = enabled;
+		public Builder classExclusion(final String className) {
+			addClassExclusionFilter(className);
 			return this;
 		}
 
-		public Builder exclusions(final List<String> exclusions) {
-			this.exclusions = exclusions;
+		public Builder methodFilter(final String methodName) {
+			addMethodFilter(methodName);
 			return this;
 		}
 
 		public MethodEntryHandler build(final EventRequestManager erm) {
-			final MethodEntryRequest mer = erm.createMethodEntryRequest();
+			MethodEntryHandler handler = new MethodEntryHandler();
 
-			if (classFilter != null)
-				mer.addClassFilter(classFilter);
+			filteredClasses.forEach(klass -> {
+				filterMethods(klass).forEach(method -> {
+					final BreakpointRequest request = erm.createBreakpointRequest(method.location());
+					request.setSuspendPolicy(EventRequest.SUSPEND_NONE);
 
-			for (final String exclusion : exclusions)
-				mer.addClassExclusionFilter(exclusion);
+					handler.requests.add(request);
+				});
+			});
 
-			mer.setSuspendPolicy(EventRequest.SUSPEND_NONE);
-			mer.setEnabled(enabled);
+			return handler;
+		}
 
-			final MethodEntryHandler methodEntryHandler = new MethodEntryHandler();
-
-			methodEntryHandler.request = mer;
-
-			return methodEntryHandler;
+		public boolean validateBuilder() {
+			return true;
 		}
 	}
 }

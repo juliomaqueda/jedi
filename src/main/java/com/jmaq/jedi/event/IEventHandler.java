@@ -2,7 +2,7 @@ package com.jmaq.jedi.event;
 
 import com.sun.jdi.event.Event;
 
-public interface IEventHandler {
+interface IEventHandler {
 
 	public boolean canHandle(Event event);
 
